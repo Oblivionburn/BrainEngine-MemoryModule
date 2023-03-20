@@ -1,2 +1,5 @@
 # MemoryModule
- Memory module for the BrainEngine project
+Memory module for the BrainEngine project
+
+## Dependencies:
+NetworkModule

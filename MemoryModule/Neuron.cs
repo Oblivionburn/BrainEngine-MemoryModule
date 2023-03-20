@@ -6,22 +6,34 @@ namespace MemoryModule
     public class Neuron
     {
         public Guid ID;
-        public float Weight;
+        public Guid NetworkID;
         public List<Guid> NeuronConnections = new List<Guid>();
-        public List<Guid> NetworkConnections = new List<Guid>();
+        public float Weight;
         public DataPacket Data;
 
         public Neuron(Guid networkID, DataPacket data)
         {
             ID = Guid.NewGuid();
             Weight = 1;
+            NetworkID = networkID;
+            Data = data;
+        }
 
-            if (!NetworkConnections.Contains(networkID))
+        public List<NeuronConnection> GetConnections(List<NeuronConnection> NeuronConnections)
+        {
+            List<NeuronConnection> connections = new List<NeuronConnection>();
+
+            int count = NeuronConnections.Count;
+            for (int i = 0; i < count; i++)
             {
-                NetworkConnections.Add(networkID);
+                NeuronConnection connection = NeuronConnections[i];
+                if (connection.Neurons.Contains(ID))
+                {
+                    connections.Add(connection);
+                }
             }
 
-            Data = data;
+            return connections;
         }
     }
 }

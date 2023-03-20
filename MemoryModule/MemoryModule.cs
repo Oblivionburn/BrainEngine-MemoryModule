@@ -1,14 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace MemoryModule
 {
-    public class MemoryNode
+    public class MemoryModule
     {
         public List<Memory> Memories = new List<Memory>();
         public List<Network> Networks = new List<Network>();
+        public List<NeuronConnection> NeuronConnections = new List<NeuronConnection>();
 
-        public MemoryNode()
+        public MemoryModule()
         {
             
         }
@@ -16,7 +18,7 @@ namespace MemoryModule
         public void ReceiveData(List<DataPacket> dataPackets)
         {
             List<Neuron> neurons = new List<Neuron>();
-
+            
             int dataCount = dataPackets.Count;
             for (int i = 0; i < dataCount; i++)
             {
@@ -28,23 +30,19 @@ namespace MemoryModule
                 //Get new or existing neuron from network
                 Neuron neuron = network.GetNeuron(packet);
 
-                //Associate current neuron with the rest in the set
-                int count = neurons.Count;
-                for (int c = 0; c < count; c++)
-                {
-                    Neuron existing = neurons[c];
-
-                    //Don't associate a neuron with itself
-                    //Don't add duplicate associations
-                    if (existing.ID != neuron.ID &&
-                        !existing.NeuronConnections.Contains(neuron.ID))
-                    {
-                        existing.NeuronConnections.Add(neuron.ID);
-                    }
-                }
-
                 neurons.Add(neuron);
                 network.AddNeuron(neuron);
+            }
+
+            int count = neurons.Count;
+            if (count > 1)
+            {
+                //Check if these neurons are already all in a connection
+                if (!ConnectionExists(neurons))
+                {
+                    //Associate neurons in this set with each other
+                    NewConnection(neurons);
+                }
             }
 
             //Add new frame of data to memory for later recollection
@@ -75,6 +73,52 @@ namespace MemoryModule
             Networks.Add(network);
 
             return network;
+        }
+
+        private bool ConnectionExists(List<Neuron> neurons)
+        {
+            List<NeuronConnection> connections = neurons[0].GetConnections(NeuronConnections);
+
+            int connectionCount = connections.Count;
+            for (int i = 0; i < connectionCount; i++)
+            {
+                NeuronConnection connection = connections[i];
+
+                bool connected = true;
+
+                int neuronCount = neurons.Count;
+                for (int j = 0; j < neuronCount; j++)
+                {
+                    Neuron existing = neurons[j];
+                    if (!connection.Neurons.Contains(existing.ID))
+                    {
+                        connected = false;
+                        break;
+                    }
+                }
+
+                if (connected)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private void NewConnection(List<Neuron> neurons)
+        {
+            NeuronConnection connection = new NeuronConnection();
+
+            int count = neurons.Count;
+            for (int i = 0; i < count; i++)
+            {
+                Neuron existing = neurons[i];
+                existing.NeuronConnections.Add(connection.ID);
+                connection.Neurons.Add(existing.ID);
+            }
+
+            NeuronConnections.Add(connection);
         }
 
         public Memory CurrentMemory()

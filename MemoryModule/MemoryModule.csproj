@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="NetworkModule">
+      <HintPath>..\..\NetworkModule\NetworkModule\bin\Debug\NetworkModule.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -41,14 +44,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MemoryModule.cs" />
-    <Compile Include="CryptoRandom.cs" />
-    <Compile Include="DataPacket.cs" />
+    <Compile Include="MemoryManager.cs" />
     <Compile Include="Frame.cs" />
     <Compile Include="Memory.cs" />
-    <Compile Include="Network.cs" />
-    <Compile Include="Neuron.cs" />
-    <Compile Include="NeuronConnection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

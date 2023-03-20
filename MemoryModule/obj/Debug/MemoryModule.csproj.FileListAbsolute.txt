@@ -4,3 +4,6 @@ F:\Development\BrainEngine\MemoryModule\MemoryModule\obj\Debug\MemoryModule.cspr
 F:\Development\BrainEngine\MemoryModule\MemoryModule\obj\Debug\MemoryModule.csproj.CoreCompileInputs.cache
 F:\Development\BrainEngine\MemoryModule\MemoryModule\obj\Debug\MemoryModule.dll
 F:\Development\BrainEngine\MemoryModule\MemoryModule\obj\Debug\MemoryModule.pdb
+F:\Development\BrainEngine\MemoryModule\MemoryModule\bin\Debug\NetworkModule.dll
+F:\Development\BrainEngine\MemoryModule\MemoryModule\bin\Debug\NetworkModule.pdb
+F:\Development\BrainEngine\MemoryModule\MemoryModule\obj\Debug\MemoryModule.csproj.CopyComplete

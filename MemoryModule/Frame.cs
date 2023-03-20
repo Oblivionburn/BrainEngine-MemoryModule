@@ -72,10 +72,16 @@ namespace MemoryModule
         {
             Weight /= 2;
 
-            //Drop a random neuron to represent memories losing resolution/clarity
-            CryptoRandom random = new CryptoRandom();
-            int choice = random.Next(0, Neurons.Count);
-            Neurons.RemoveAt(choice);
+            //If decayed to a millionth or less of original weight, drop a random neuron
+            if (Weight <= 0.000001f)
+            {
+                CryptoRandom random = new CryptoRandom();
+                int choice = random.Next(0, Neurons.Count);
+                Neurons.RemoveAt(choice);
+
+                //Reset weight so we're not dropping neurons too quickly
+                Weight = 1;
+            }
         }
     }
 }

@@ -43,6 +43,10 @@ namespace MemoryModule
                     {
                         //Fade old memories
                         existing.Decay();
+                        if (existing.Frames.Count == 0)
+                        {
+                            Memories.Remove(existing);
+                        }
                     }
                 }
             }
@@ -84,6 +88,10 @@ namespace MemoryModule
                 {
                     //Decay old memories
                     memory.Decay();
+                    if (memory.Frames.Count == 0)
+                    {
+                        Memories.Remove(memory);
+                    }
                 }
             }
 

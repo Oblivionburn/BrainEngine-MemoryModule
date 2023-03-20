@@ -66,7 +66,13 @@ namespace MemoryModule
 
             CryptoRandom random = new CryptoRandom();
             int choice = random.Next(0, Frames.Count);
-            Frames[choice].Decay();
+            Frame frame = Frames[choice];
+
+            frame.Decay();
+            if (frame.Neurons.Count == 0)
+            {
+                Frames.Remove(frame);
+            }
         }
     }
 }
